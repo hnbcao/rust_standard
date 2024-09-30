@@ -1,0 +1,29 @@
+[workspace]
+resolver = "2"
+members = [
+    "application",
+    "common",
+    "macros"
+]
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+description = "template"
+
+[workspace.dependencies]
+application = { version = "0.1.0", path = "application" }
+common = { version = "0.1.0", path = "common" }
+macros = { version = "0.1.0", path = "macros" }
+
+config = "0.14.0"
+num_cpus = "1"
+thiserror = "1.0"
+rust-embed = "8.5.0"
+
+tokio = { version = "1.40", features = ["full"] }
+actix = "0.13"
+actix-web = "4.9.0"
+serde = "1.0"
+serde_json = "1.0"
+serde_with = "3.9"
+serde_derive = "1.0"
