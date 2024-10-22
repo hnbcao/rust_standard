@@ -1,8 +1,9 @@
-use std::{env, net};
-use config::{Config, File, FileFormat};
-use std::path::Path;
-use serde::Deserialize;
 use crate::core::errors::AppResult;
+use config::{Config, File, FileFormat};
+use serde::Deserialize;
+use std::path::Path;
+use std::time::Duration;
+use std::env;
 
 const DEFAULT_CONFIG: &str = include_str!("../config/application.yaml");
 
@@ -10,8 +11,8 @@ const APP_CONFIG_PATH: &str = "/home/app/conf/application.yaml";
 
 #[derive(Debug, Deserialize)]
 pub struct AppConfig {
-    server: Server,
-    // database: Database,
+    pub server: Server,
+    pub data_source: DataSource,
 }
 
 impl AppConfig {
@@ -35,7 +36,7 @@ impl AppConfig {
     }
 
     pub fn path(&self) -> String {
-        self.server.path.clone()
+        self.server.path.clone().trim().trim_end_matches(|c: char| c == '/').to_string()
     }
 }
 
@@ -52,11 +53,29 @@ struct Server {
     pub path: String,
 }
 
+#[serde_with::serde_as]
 #[derive(Debug, Deserialize)]
-struct Database {
-    user: String,
-    password: String,
-    database: String,
+pub struct DataSource {
+    /// 数据库连接：`sqlite::memory:`,`sqlite://path/to/db.sqlite?mode=rwc`,`mysql://username:password@host/database?currentSchema=my_schema`
+    pub url: String,
+    /// 连接池最大连接 (默认为10)
+    #[serde(default)]
+    pub max_connections: Option<u32>,
+    /// 连接池最大连接 (默认为0)
+    #[serde(default)]
+    pub min_connections: Option<u32>,
+    /// 连接的最大空闲时间，以防止网络资源耗尽 (默认为10m)
+    #[serde_as(as = "Option<serde_with::DurationSeconds<u64>>")]
+    #[serde(default)]
+    pub idle_timeout: Option<Duration>,
+    /// 设置等待获取连接所花费的最长时间&连接的超时时间 (默认为30s)
+    #[serde_as(as = "Option<serde_with::DurationSeconds<u64>>")]
+    #[serde(default)]
+    pub acquire_timeout: Option<Duration>,
+    /// 设置单个连接的最长生命周期 (默认为30m)
+    #[serde_as(as = "Option<serde_with::DurationSeconds<u64>>")]
+    #[serde(default)]
+    pub max_lifetime: Option<Duration>,
 }
 
 fn default_address() -> String {
@@ -68,5 +87,5 @@ fn default_port() -> u16 {
 }
 
 fn default_path() -> String {
-    "/".to_string()
+    "".to_string()
 }

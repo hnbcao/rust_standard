@@ -5,8 +5,14 @@ edition.workspace = true
 description.workspace = true
 
 [dependencies]
+common = { workspace = true }
+
+config = { workspace = true }
 num_cpus = { workspace = true }
+thiserror = { workspace = true }
 rust-embed = { workspace = true }
+
+sea-orm = { workspace = true }
 
 tokio = { workspace = true }
 actix = { workspace = true }
@@ -14,5 +20,3 @@ actix-web = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 serde_with = { workspace = true }
-config = { workspace = true }
-thiserror = { workspace = true }

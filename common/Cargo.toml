@@ -5,3 +5,15 @@ edition.workspace = true
 description.workspace = true
 
 [dependencies]
+thiserror = { workspace = true }
+sqlx = { workspace = true }
+sea-orm = { workspace = true }
+sea-orm-migration = { workspace = true }
+lettre = { workspace = true }
+
+#serde = { workspace = true }
+#serde_with = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
+tokio-test = { workspace = true }

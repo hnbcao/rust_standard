@@ -1,3 +1,4 @@
+use sea_orm::DbErr;
 use thiserror::Error;
 
 pub type AppResult<T> = Result<T, AppError>;
@@ -9,4 +10,7 @@ pub enum AppError {
 
     #[error("{0}")]
     Config(#[from] config::ConfigError),
+
+    #[error("{0}")]
+    Db(#[from] DbErr)
 }

@@ -1,3 +1,8 @@
+pub mod env;
+pub mod domain;
+pub mod migration;
+pub mod email;
+mod errors;
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }

@@ -2,3 +2,8 @@ server:
   address: "127.0.0.1"
   port: 8080
   path: "/"
+data_source:
+  #  url: "sqlite::memory:"
+  #  url: "sqlite://rust_standard.db?mode=rwc"
+  #  url: "mysql://root:302@Segma@10.73.13.51:3307/rust_standard"
+  url: "mysql://root:302@Segma@10.73.13.51:3307/rust_standard"
