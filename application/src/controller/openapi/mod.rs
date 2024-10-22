@@ -1,9 +1,11 @@
-use actix_web::{HttpResponse, web};
+use salvo::{handler, Router};
 
-pub fn config(cfg: &mut web::ServiceConfig) {
-    cfg.service(
-        web::resource("/app")
-            .route(web::get().to(|| async { HttpResponse::Ok().body("open") }))
-            .route(web::head().to(HttpResponse::MethodNotAllowed)),
-    );
+#[handler]
+async fn hello() -> &'static str {
+    "Hello World"
+}
+
+pub(crate) fn router() -> Router {
+    let router = Router::with_path("open").get(hello);
+    router
 }

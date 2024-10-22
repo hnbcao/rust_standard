@@ -4,6 +4,7 @@ use serde::Deserialize;
 use std::path::Path;
 use std::time::Duration;
 use std::env;
+use std::fmt::{Display, Formatter};
 
 const DEFAULT_CONFIG: &str = include_str!("../config/application.yaml");
 
@@ -41,7 +42,7 @@ impl AppConfig {
 }
 
 #[derive(Debug, Deserialize)]
-struct Server {
+pub struct Server {
     /// 服务器的IP地址：`0.0.0.0`/`127.0.0.1`
     #[serde(default = "default_address")]
     pub address: String,
@@ -51,6 +52,12 @@ struct Server {
 
     #[serde(default = "default_path")]
     pub path: String,
+}
+
+impl Display for Server {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}:{}", self.address, self.port)
+    }
 }
 
 #[serde_with::serde_as]

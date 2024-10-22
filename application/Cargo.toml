@@ -6,17 +6,16 @@ description.workspace = true
 
 [dependencies]
 common = { workspace = true }
-
 config = { workspace = true }
 num_cpus = { workspace = true }
+lazy_static = { workspace = true }
 thiserror = { workspace = true }
 rust-embed = { workspace = true }
-
 sea-orm = { workspace = true }
-
+tracing = { workspace = true }
 tokio = { workspace = true }
-actix = { workspace = true }
-actix-web = { workspace = true }
+futures = { workspace = true }
+salvo = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 serde_with = { workspace = true }
