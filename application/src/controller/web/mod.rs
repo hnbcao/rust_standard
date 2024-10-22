@@ -1,3 +1,5 @@
+mod user_api;
+
 use actix_web::{HttpResponse, web as atx_web};
 
 pub fn config(cfg: &mut atx_web::ServiceConfig) {

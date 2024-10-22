@@ -1,0 +1,62 @@
+version: '3.0'
+services:
+  jaeger:
+    networks:
+      - jaeger
+    image: hub.local.segma.tech/jaegertracing/all-in-one:1.62.0
+    volumes:
+      - "./config/jaeger-ui.json:/etc/jaeger/jaeger-ui.json"
+    command: --query.ui-config /etc/jaeger/jaeger-ui.json
+    environment:
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://prometheus:9090
+      - PROMETHEUS_QUERY_NAMESPACE=${PROMETHEUS_QUERY_NAMESPACE:-}
+      - PROMETHEUS_QUERY_DURATION_UNIT=${PROMETHEUS_QUERY_DURATION_UNIT:-}
+      - PROMETHEUS_QUERY_NORMALIZE_CALLS=true
+      - PROMETHEUS_QUERY_NORMALIZE_DURATION=true
+    ports:
+      - "16686:16686"
+
+  otel_collector:
+    networks:
+      jaeger:
+        # This is the host name used in Prometheus scrape configuration.
+        aliases: [spm_metrics_source]
+    image: hub.local.segma.tech/otel/opentelemetry-collector-contrib:0.111.0
+    volumes:
+      - "./config/otel-collector-config-connector.yml:/etc/otelcol/otel-collector-config.yml"
+    command: --config /etc/otelcol/otel-collector-config.yml
+    depends_on:
+      - jaeger
+    ports:
+      - "8889:8889"
+      - "4318:4318"
+
+  prometheus:
+    networks:
+      - jaeger
+    image: hub.local.segma.tech/prometheus/prometheus:v2.54.1
+    volumes:
+      - "./config/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./data/prometheus:/prometheus"
+    ports:
+      - "9090:9090"
+
+  grafana:
+    networks:
+      - jaeger
+    image: hub.local.segma.tech/grafana/grafana:11.2.2-security-01
+    volumes:
+      - "./config/grafana.ini:/etc/grafana/grafana.ini"
+      - "./config/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml"
+      - "./data/grafana:/var/lib/grafana"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - "3000:3000"
+
+networks:
+  jaeger:
+    driver: bridge
