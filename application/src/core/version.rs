@@ -1,15 +1,15 @@
 use std::cmp::Ordering;
 use std::fmt::{Display, Formatter};
+
 use crate::assets;
 
-
-#[derive(Clone, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Version {
-    major: usize,
-    minor: usize,
-    patch: usize,
-    commit: Option<String>,
-    description: &'static str,
+    pub major: usize,
+    pub minor: usize,
+    pub patch: usize,
+    pub commit: Option<String>,
+    pub description: &'static str,
 }
 
 impl Default for Version {

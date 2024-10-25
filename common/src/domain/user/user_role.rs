@@ -1,6 +1,6 @@
 use sea_orm::entity::prelude::*;
 use sea_orm::{DeriveEntityModel, EntityTrait, EnumIter, RelationDef, RelationTrait};
-use crate::domain::model::user::{role, user};
+use crate::domain::user::{role, user};
 
 #[derive(Clone, Debug, DeriveEntityModel)]
 #[sea_orm(table_name = "user_role")]

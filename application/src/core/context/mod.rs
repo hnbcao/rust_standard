@@ -5,6 +5,7 @@ use crate::configs::{AppConfig, DataSource};
 use crate::core::errors::AppResult;
 use crate::core::version::Version;
 
+#[derive(Debug)]
 pub struct Context {
     pub config: Arc<AppConfig>,
     pub version: Arc<Version>,

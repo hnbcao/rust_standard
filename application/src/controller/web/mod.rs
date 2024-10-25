@@ -8,5 +8,5 @@ async fn hello() -> &'static str {
 }
 
 pub(crate) fn router() -> Router {
-    Router::new().get(hello)
+    Router::new().get(hello).push(user_api::router())
 }
