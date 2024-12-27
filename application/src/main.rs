@@ -21,6 +21,7 @@ fn main() {
         let ctx = Context::new(config).await.expect("can not init application context.");
         ctx.run_database_migration().await.expect("can not process database migrations.");
         // ctx.start().await.expect("can not start application.");
+        ctx.add_cluster_event_hook().await;
         start_web_service(ctx.into()).await.expect("web service start fail.");
         // 等到所有任务优雅关闭
         shutdown::completed().await;

@@ -1,23 +1,44 @@
-use std::sync::Arc;
-use sea_orm::{Database, DatabaseConnection};
-use common::{env, migration};
 use crate::configs::{AppConfig, DataSource};
 use crate::core::errors::AppResult;
+use crate::core::shutdown;
 use crate::core::version::Version;
+use common::{env, migration};
+use queue::broadcast::TokioSender;
+use queue::cluster_event::ClusterEventSender;
+use sea_orm::{Database, DatabaseConnection};
+use std::sync::Arc;
+use std::time::Duration;
 
-#[derive(Debug)]
 pub struct Context {
     pub config: Arc<AppConfig>,
     pub version: Arc<Version>,
     pub db: Arc<DatabaseConnection>,
+    pub cluster_event: Arc<ClusterEventSender>,
 }
 
 impl Context {
     pub(crate) async fn new(config: AppConfig) -> AppResult<Context> {
         let config: Arc<AppConfig> = config.into();
         let db: DatabaseConnection = Database::connect(init_pool_opt(&config.data_source)).await?;
+        let sender = ClusterEventSender::Queue(TokioSender::new(500));
         // config
-        Ok(Context { config, version: Arc::new(Version::default()), db: db.into() })
+        Ok(Context {
+            config,
+            version: Arc::new(Version::default()),
+            db: db.into(),
+            cluster_event: Arc::new(sender),
+        })
+    }
+
+    pub(crate) async fn add_cluster_event_hook(&self) {
+        let c = self.cluster_event.clone();
+        shutdown::push(async move {
+            c.stop().await;
+            while !c.is_empty() {
+                tokio::time::sleep(Duration::from_millis(50)).await;
+            }
+        })
+        .await;
     }
 
     pub async fn run_database_migration(&self) -> AppResult<()> {

@@ -6,6 +6,7 @@ description.workspace = true
 
 [dependencies]
 common = { workspace = true }
+queue = { workspace = true }
 uuid = { workspace = true }
 async-trait = { workspace = true }
 config = { workspace = true }

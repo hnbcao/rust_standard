@@ -1,0 +1,8 @@
+#https://rust-lang.github.io/rust-clippy/master/index.html#/
+disallowed-methods = [
+#    "std::path::Path::exists"
+]
+
+allow-unwrap-in-tests = true
+enum-variant-size-threshold = 800
+too-many-arguments-threshold = 12

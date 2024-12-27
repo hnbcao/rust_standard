@@ -1,0 +1,21 @@
+syntax = "proto3";
+package event;
+
+// 全局集群服务事件
+message ClusterEventProto {
+  int64 ts = 1;
+  oneof cluster_event {
+    UserEvent userEvent = 2;
+    GroupEvent groupEvent = 3;
+  }
+}
+
+////////////////////////////////// 用户事件 //////////////////////////////////////////
+message UserEvent {
+
+}
+
+////////////////////////////////// 组织事件 //////////////////////////////////////////
+message GroupEvent{
+
+}

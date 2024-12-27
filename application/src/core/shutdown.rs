@@ -60,16 +60,16 @@ impl ShutdownHook {
                 let ins = Instant::now();
                 tracing::info!("Terminating process due to signal SIGINT");
                 let count = sync_handlers_cnt.load(Ordering::SeqCst);
-                let mut list = Vec::new();
-                async_rx.recv_many(&mut list, count).await;
-                for h in list {
+                let mut hooks = Vec::new();
+                async_rx.recv_many(&mut hooks, count).await;
+                for h in hooks {
                     let _ = tokio::spawn(h).await;
                 }
 
                 let count = sync_handlers_cnt.load(Ordering::SeqCst);
-                let mut list = Vec::new();
-                sync_rx.recv_many(&mut list, count).await;
-                let handles: Vec<_> = list.drain(..).map(tokio::spawn).collect();
+                let mut hooks = Vec::new();
+                sync_rx.recv_many(&mut hooks, count).await;
+                let handles: Vec<_> = hooks.drain(..).map(tokio::spawn).collect();
                 for h in handles {
                     let _ = h.await;
                 }

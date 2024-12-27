@@ -1,0 +1,20 @@
+syntax = "proto3";
+package data;
+
+// 全局集群服务事件
+message ClusterDataProto {
+  int64 id = 1;
+  int64 time = 2;
+  DataValueProto data = 3;
+}
+
+// 整个产品统一的数据值格式
+message DataValueProto {
+  oneof data_value {
+    bool bool = 1;
+    int64 long = 2;
+    double double = 3;
+    string string = 4;
+    string json = 5;
+  }
+}
