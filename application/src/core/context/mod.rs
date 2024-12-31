@@ -2,9 +2,9 @@ use crate::configs::{AppConfig, DataSource};
 use crate::core::errors::AppResult;
 use crate::core::shutdown;
 use crate::core::version::Version;
+use common::queue::broadcast::TokioSender;
+use common::queue::cluster_event::ClusterEventSender;
 use common::{env, migration};
-use queue::broadcast::TokioSender;
-use queue::cluster_event::ClusterEventSender;
 use sea_orm::{Database, DatabaseConnection};
 use std::sync::Arc;
 use std::time::Duration;
@@ -33,7 +33,7 @@ impl Context {
     pub(crate) async fn add_cluster_event_hook(&self) {
         let c = self.cluster_event.clone();
         shutdown::push(async move {
-            c.stop().await;
+            c.stop();
             while !c.is_empty() {
                 tokio::time::sleep(Duration::from_millis(50)).await;
             }

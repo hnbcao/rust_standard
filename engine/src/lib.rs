@@ -1,11 +1,4 @@
-pub mod domain;
-pub mod email;
-pub mod env;
-mod errors;
-pub mod migration;
-pub mod queue;
-
-pub fn add(left: usize, right: usize) -> usize {
+pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
 

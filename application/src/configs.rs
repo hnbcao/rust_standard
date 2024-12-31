@@ -1,10 +1,11 @@
 use crate::core::errors::AppResult;
+use crate::logging::Logging;
 use config::{Config, File, FileFormat};
 use serde::Deserialize;
-use std::path::Path;
-use std::time::Duration;
 use std::env;
 use std::fmt::{Display, Formatter};
+use std::path::Path;
+use std::time::Duration;
 
 const DEFAULT_CONFIG: &str = include_str!("../config/application.yaml");
 
@@ -14,6 +15,7 @@ const APP_CONFIG_PATH: &str = "/home/app/conf/application.yaml";
 pub struct AppConfig {
     pub server: Server,
     pub data_source: DataSource,
+    pub logging: Logging,
 }
 
 impl AppConfig {

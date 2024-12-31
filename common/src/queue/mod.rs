@@ -10,11 +10,12 @@ pub fn add(left: u64, right: u64) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::broadcast::TokioSender;
-    use crate::cluster_event::ClusterEventSender;
-    use crate::message::event::cluster_event_proto::ClusterEvent;
-    use crate::message::event::{ClusterEventProto, UserEvent};
+
     use std::time::Duration;
+    use crate::queue::broadcast::TokioSender;
+    use crate::queue::cluster_event::ClusterEventSender;
+    use crate::queue::message::event::cluster_event_proto::ClusterEvent;
+    use crate::queue::message::event::{ClusterEventProto, UserEvent};
 
     #[tokio::test]
     pub async fn test_queue() {

@@ -1,6 +1,6 @@
 use salvo::{Depot, oapi, Request, Response, Writer};
 use salvo::http::StatusCode;
-use salvo::oapi::{Components, EndpointOutRegister, Object, Operation, Ref, RefOr, Schema, schema, ToSchema};
+use salvo::oapi::{Components, EndpointOutRegister,  Operation, Ref, RefOr, Schema,  ToSchema};
 use salvo::prelude::Text;
 use sea_orm::prelude::async_trait;
 

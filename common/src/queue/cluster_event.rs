@@ -1,6 +1,6 @@
-use crate::broadcast::{TokioReceiver, TokioSender};
-use crate::errors::Result;
-use crate::message::event::ClusterEventProto;
+use crate::queue::broadcast::{TokioReceiver, TokioSender};
+use crate::queue::errors::Result;
+use crate::queue::message::event::ClusterEventProto;
 
 pub enum ClusterEventSender {
     Queue(TokioSender<ClusterEventProto>),

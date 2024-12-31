@@ -9,7 +9,7 @@ use lazy_static::lazy_static;
 use tokio::signal;
 use tokio::sync::{mpsc, Mutex, oneshot, RwLock};
 use tokio::sync::mpsc::{UnboundedReceiver, UnboundedSender};
-use tokio::sync::oneshot::{Receiver, Sender};
+use tokio::sync::oneshot::Receiver;
 use tracing::{Instrument, Span};
 
 lazy_static! {

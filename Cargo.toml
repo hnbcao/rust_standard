@@ -3,8 +3,8 @@ resolver = "2"
 members = [
     "application",
     "common",
-    "macros",
-    "queue"
+    "engine",
+    "macros"
 ]
 [workspace.package]
 version = "0.1.0"
@@ -12,14 +12,12 @@ edition = "2021"
 description = "template"
 
 [workspace.dependencies]
-application = { version = "0.1.0", path = "application" }
 common = { version = "0.1.0", path = "common" }
-queue = { version = "0.1.0", path = "queue" }
 macros = { version = "0.1.0", path = "macros" }
 
-config = "0.14.0"
+config = "0.15.4"
 num_cpus = "1"
-thiserror = "1.0"
+thiserror = "2.0.9"
 rust-embed = "8.5.0"
 lazy_static = "1.5"
 uuid = { version = "1.11.0", features = ["v4"] }
@@ -29,21 +27,17 @@ futures = "0.3"
 tokio = { version = "1.40", features = ["full"] }
 tokio-test = "0.4.4"
 
-salvo = { version = "0.73", features = ["test", "oapi"] }
+salvo = { version = "0.74.3", features = ["test", "oapi"] }
 
+smallvec = "1.13"
+nu-ansi-term = "0.50"
 tracing = "0.1"
-tracing-core = "0.1"
+tracing-appender = "0.2"
 tracing-subscriber = "0.3"
-tracing-opentelemetry = "0.27"
-opentelemetry = "0.26"
-opentelemetry_sdk = { version = "0.26", features = ["rt-tokio"] }
-opentelemetry-otlp = { version = "0.26" }
-opentelemetry-semantic-conventions = { version = "0.26", features = ["semconv_experimental"] }
 
 serde = "1.0"
 serde_json = "1.0"
 serde_with = "3.9"
-serde_derive = "1.0"
 
 prost = "0.13"
 prost-build = "0.13"

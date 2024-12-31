@@ -6,7 +6,6 @@ description.workspace = true
 
 [dependencies]
 common = { workspace = true }
-queue = { workspace = true }
 uuid = { workspace = true }
 async-trait = { workspace = true }
 config = { workspace = true }
@@ -15,14 +14,11 @@ lazy_static = { workspace = true }
 thiserror = { workspace = true }
 rust-embed = { workspace = true }
 sea-orm = { workspace = true }
+smallvec = { workspace = true }
+nu-ansi-term = { workspace = true }
 tracing = { workspace = true }
-tracing-core = { workspace = true }
+tracing-appender = { workspace = true }
 tracing-subscriber = { workspace = true }
-tracing-opentelemetry = { workspace = true }
-opentelemetry = { workspace = true }
-opentelemetry_sdk = { workspace = true }
-opentelemetry-otlp = { workspace = true }
-opentelemetry-semantic-conventions = { workspace = true }
 tokio = { workspace = true }
 futures = { workspace = true }
 salvo = { workspace = true }

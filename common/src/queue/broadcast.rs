@@ -1,9 +1,8 @@
-use crate::errors::{Error, Result};
+use crate::queue::errors::{Error, Result};
 use std::any::type_name;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use tokio::sync::broadcast;
-use tokio::sync::broadcast::error::SendError;
 use tokio::sync::broadcast::{Receiver, Sender};
 
 pub struct TokioSender<M: prost::Message + Clone> {
