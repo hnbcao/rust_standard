@@ -2,6 +2,10 @@ server:
   address: "127.0.0.1"
   port: 8080
   path: "/"
+#  openai:可选配
+openapi:
+  server: "http://localhost:8080"
+  cors_origin: [ "*" ]
 data_source:
   #  url: "sqlite::memory:"
   #  url: "sqlite://rust_standard.db?mode=rwc"

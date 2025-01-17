@@ -10,6 +10,9 @@ pub mod logger;
 
 pub const TRACE_USER_OR_APP_NAME: &str = "USER-APP-IDENT";
 
+/// 外部服务认证标识（HEADER）
+pub const HEADER_APP_TOKEN: &str = "APP-TOKEN";
+
 pub const REQUEST_ID_NAME: &str = "x-request-id";
 pub const TRACE_ID_DEFAULT: &str = "unknown";
 pub const DEFAULT_JSON: &str = r#"{"code":"500","message":null,"traceId":null,"data":null}"#;

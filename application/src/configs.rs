@@ -14,6 +14,7 @@ const APP_CONFIG_PATH: &str = "/home/app/conf/application.yaml";
 #[derive(Debug, Deserialize)]
 pub struct AppConfig {
     pub server: Server,
+    pub openapi: OpenApi,
     pub data_source: DataSource,
     pub logging: Logging,
 }
@@ -62,6 +63,34 @@ impl Display for Server {
     }
 }
 
+/// 开发文档配置文件
+#[derive(Clone, Debug, Deserialize, PartialEq)]
+pub struct OpenApi {
+    /// openapi请求的基本路径,需要以`http`开头，默认`http://127.0.0.1:8080`
+    #[serde(default = "default_server")]
+    pub server: String,
+    /// openapi请求的基本路径,需要以`http`开头，默认`http://127.0.0.1:8080`
+    #[serde(default)]
+    pub cors_origin: Vec<String>,
+    /// 是否开启内部的开放文档，默认：`true`
+    #[serde(default = "default_enable_web_doc")]
+    pub enable_web_doc: bool,
+    /// 是否开启外部的开放文档，默认：`true`
+    #[serde(default = "default_enable_open_doc")]
+    pub enable_open_doc: bool,
+}
+
+impl Default for OpenApi {
+    fn default() -> Self {
+        OpenApi {
+            server: default_server(),
+            cors_origin: Default::default(),
+            enable_web_doc: default_enable_web_doc(),
+            enable_open_doc: default_enable_open_doc(),
+        }
+    }
+}
+
 #[serde_with::serde_as]
 #[derive(Debug, Deserialize)]
 pub struct DataSource {
@@ -98,3 +127,16 @@ fn default_port() -> u16 {
 fn default_path() -> String {
     "".to_string()
 }
+
+fn default_server() -> String {
+    "http://127.0.0.1:8080".to_string()
+}
+
+fn default_enable_web_doc() -> bool {
+    true
+}
+
+fn default_enable_open_doc() -> bool {
+    true
+}
+

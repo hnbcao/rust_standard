@@ -27,7 +27,9 @@ futures = "0.3"
 tokio = { version = "1.40", features = ["full"] }
 tokio-test = "0.4.4"
 
-salvo = { version = "0.74.3", features = ["test", "oapi"] }
+salvo = { version = "0.75.0", features = ["serve-static", "oapi", "cors"] }
+salvo-oapi = { version = "0.75.0", default-features = false, features = ["chrono", "decimal", "decimal-float", "indexmap"] }
+salvo-compression = { version = "0.75.0", default-features = false, features = ["deflate"] }
 
 smallvec = "1.13"
 nu-ansi-term = "0.50"

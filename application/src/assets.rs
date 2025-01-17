@@ -4,8 +4,8 @@ pub const COMMIT: &str = include_str!("../assets/commit");
 
 #[derive(RustEmbed)]
 #[folder = "assets/openapi"]
-struct AssetsOpenapi;
+pub struct AssetsOpenapi;
 
 #[derive(RustEmbed)]
 #[folder = "assets/static"]
-struct AssetsStatic;
+pub struct AssetsStatic;

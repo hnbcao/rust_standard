@@ -6,6 +6,6 @@ async fn hello() -> &'static str {
 }
 
 pub(crate) fn router() -> Router {
-    let router = Router::with_path("open").get(hello);
+    let router = Router::new().path("open").get(hello);
     router
 }
